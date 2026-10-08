@@ -1,0 +1,71 @@
+/* Customer site layout. Tokens and components come from @booking/shared/ui/styles.css. */
+html { background: var(--paper-deep); }
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, color-mix(in srgb, var(--signal) 18%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper) 60%, var(--paper-deep) 100%);
+  background-attachment: fixed;
+}
+.shell { max-width: 1120px; margin: 0 auto; padding: 0 20px; min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1; padding: 24px 0 64px; }
+
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
+.wordmark { font-family: var(--font-display); font-size: 30px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.wordmark span { color: var(--signal); }
+.site-header nav { display: flex; align-items: center; gap: 14px; }
+.nav-link { color: var(--ink); font-weight: 600; text-decoration: none; }
+.nav-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+a.button { text-decoration: none; }
+a.button.signal-button { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr); gap: 56px; align-items: end; padding-top: 48px; }
+.hero .display { margin: 18px 0 22px; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 30px; }
+.hint { color: var(--muted); font-size: 14px; }
+
+.board {
+  background: #0f1b17;
+  color: #f2ede3;
+  border-radius: var(--radius-l);
+  padding: 22px 22px 10px;
+  transform: rotate(1.2deg);
+  box-shadow: 0 30px 60px -30px rgba(16, 36, 31, 0.6);
+}
+.board-title { color: var(--signal); font-size: 12px; letter-spacing: 0.2em; margin: 0 0 12px; }
+.board ul { list-style: none; margin: 0; padding: 0; }
+.board li {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  grid-template-areas: "time place code" "time status status";
+  column-gap: 12px;
+  padding: 12px 0;
+  border-top: 1px dashed rgba(242, 237, 227, 0.18);
+}
+.board-time { grid-area: time; font-size: 20px; color: var(--signal); }
+.board-place { grid-area: place; font-weight: 600; }
+.board-code { grid-area: code; font-size: 12px; opacity: 0.7; }
+.board-status { grid-area: status; font-size: 13px; opacity: 0.75; }
+
+.auth-card { max-width: 440px; margin: 40px auto 0; display: grid; gap: 16px; padding: 32px; border-radius: var(--radius-l); }
+.auth-title { font-family: var(--font-display); font-weight: 400; font-size: 44px; line-height: 1; margin: 0 0 8px; }
+.auth-card .eyebrow { margin: 0; }
+.auth-card button[type="submit"] { width: 100%; margin-top: 4px; }
+.auth-switch { margin: 0; text-align: center; color: var(--muted); font-size: 14px; }
+.auth-switch a { color: var(--ink); font-weight: 600; }
+
+.account { max-width: 720px; padding-top: 32px; }
+.account-name { font-size: clamp(40px, 6vw, 64px); margin: 10px 0 28px; }
+.account-facts { display: grid; grid-template-columns: max-content 1fr; gap: 12px 28px; margin: 0 0 24px; padding: 24px; }
+.account-facts dt { color: var(--muted); font-size: 14px; }
+.account-facts dd { margin: 0; font-weight: 600; display: flex; gap: 6px; flex-wrap: wrap; }
+
+.site-footer { padding: 24px 0 40px; border-top: 1px solid var(--line); }
+.site-footer summary { cursor: pointer; color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+.site-footer details[open] summary { margin-bottom: 16px; }
+
+@media (max-width: 820px) {
+  .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 16px; }
+  .board { transform: none; }
+  .site-header nav a.button { display: none; }
+  .auth-card { padding: 24px 18px; margin-top: 12px; }
+}
