@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { ApiError } from "@booking/shared/auth";
 import { auth } from "./api";
+import { hasPendingQuote } from "./booking/draft";
 import { go } from "./route";
 
 type Errors = Record<string, string>;
@@ -62,7 +63,7 @@ function useSubmit(action: (form: FormData) => Promise<unknown>) {
     setFields({});
     try {
       await action(new FormData(event.currentTarget));
-      go("account");
+      go(hasPendingQuote() ? "book" : "account");
     } catch (error) {
       const described = describe(error);
       setMessage(described.message);

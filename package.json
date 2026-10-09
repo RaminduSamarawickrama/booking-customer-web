@@ -7,10 +7,11 @@
     "dev": "vite",
     "build": "tsc --noEmit -p . && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p ."
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run"
   },
   "dependencies": {
-    "@booking/shared": "github:RaminduSamarawickrama/booking-shared#75ec03ff462326200ea13f8fac12a6b18cb5da32",
+    "@booking/shared": "github:RaminduSamarawickrama/booking-shared#a9708264acad303774234423ffcbee31df6b0d5f",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
@@ -19,7 +20,8 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
     "typescript": "^5.9.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.4",
+    "vitest": "^5.0.3"
   },
   "engines": {
     "node": ">=22"
