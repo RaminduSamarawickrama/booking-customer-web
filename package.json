@@ -11,7 +11,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@booking/shared": "github:RaminduSamarawickrama/booking-shared#a9708264acad303774234423ffcbee31df6b0d5f",
+    "@booking/shared": "github:RaminduSamarawickrama/booking-shared#6f6699b77d81ef61ecd084dc1952b321f9560269",
+    "@stripe/react-stripe-js": "^7.0.0",
+    "@stripe/stripe-js": "^10.0.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },

@@ -4,10 +4,11 @@ import { formatMoney, type Booking, type Extra, type VehicleCategory } from "@bo
 import { bookingApi, useSession } from "../api";
 import { href } from "../route";
 import { tokenFor } from "./guestBookings";
+import { PaymentPanel } from "./PaymentPanel";
 import { formatDistance, formatDuration, formatWhen } from "./time";
 
 const STATUS: Record<Booking["status"], { label: string; tone: string; help: string }> = {
-  PENDING_PAYMENT: { label: "Pending payment", tone: "signal", help: "We're holding this booking for 30 minutes. Online payment is coming in the next release." },
+  PENDING_PAYMENT: { label: "Pending payment", tone: "signal", help: "We're holding this booking for 30 minutes. Pay now to confirm it." },
   CONFIRMED: { label: "Confirmed", tone: "good", help: "You're booked. We'll send your driver's details before pickup." },
   CANCELLED: { label: "Cancelled", tone: "bad", help: "This booking was cancelled." },
   EXPIRED: { label: "Expired", tone: "bad", help: "This booking wasn't paid in time, so it was released." },
@@ -21,6 +22,24 @@ export function BookingPage({ reference, token: linkToken }: { reference: string
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [confirming, setConfirming] = useState(() => window.location.hash.includes("paid="));
+
+  // After paying, the server confirms the booking from the payment event: wait for it.
+  useEffect(() => {
+    if (!confirming) return;
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries++;
+      bookingApi.get(reference, token).then((latest) => {
+        setBooking(latest);
+        if (latest.status !== "PENDING_PAYMENT" || tries >= 30) {
+          setConfirming(false);
+          clearInterval(timer);
+        }
+      }).catch(() => undefined);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [confirming, reference, token]);
 
   useEffect(() => {
     setError("");
@@ -112,6 +131,13 @@ export function BookingPage({ reference, token: linkToken }: { reference: string
             <dt className="total">Total</dt>
             <dd className="total">{formatMoney(booking.totalMinor, booking.currency)}</dd>
           </dl>
+          {booking.status === "PENDING_PAYMENT" && (
+            confirming ? (
+              <p className="notice good" role="status">Payment received. Confirming your booking…</p>
+            ) : (
+              <PaymentPanel booking={booking} token={token} onPaid={() => setConfirming(true)} />
+            )
+          )}
           <div className="booking-actions">
             {token && (
               <button type="button" className="secondary" onClick={() => void navigator.clipboard?.writeText(link).then(() => setCopied(true))}>
@@ -123,7 +149,7 @@ export function BookingPage({ reference, token: linkToken }: { reference: string
                 Save to my account
               </button>
             )}
-            {booking.status === "PENDING_PAYMENT" && (
+            {booking.status === "PENDING_PAYMENT" && !confirming && (
               <button type="button" className="danger" disabled={busy} onClick={() => void act("cancel")}>
                 Cancel booking
               </button>

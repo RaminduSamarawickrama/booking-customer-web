@@ -408,13 +408,13 @@ function ReviewStep({ categories, extras, expired }: { categories: VehicleCatego
         </dd>
       </dl>
       <p className="muted small">
-        Payment is the next step and is added in the next release, so your booking will be held as <strong>pending payment</strong>.
+        Next you'll pay securely. We hold your booking for 30 minutes while you do.
       </p>
       {error && <p className="notice bad" role="alert">{error}</p>}
       <div className="step-actions">
         <span />
         <button type="button" className="signal" disabled={busy || expired} onClick={() => void confirm()}>
-          {busy ? "Booking…" : expired ? "Refresh prices to book" : "Confirm booking"}
+          {busy ? "Booking…" : expired ? "Refresh prices to book" : "Book and pay"}
         </button>
       </div>
     </section>

@@ -208,3 +208,11 @@ a.button.secondary:hover { border-color: var(--ink-soft); }
 .lines { column-gap: 0; }
 .lines dd { padding-left: 12px; }
 @media (max-width: 820px) { body { background-attachment: scroll; } }
+
+/* ---------------------------------------------------------------- payment */
+.pay { display: grid; gap: 14px; margin: 18px 0; }
+.mock-card { padding: 18px; border: 1px dashed var(--line); border-radius: var(--radius-m); background: var(--paper); }
+.test-banner { margin: 0; font-size: 11px; letter-spacing: .14em; color: var(--signal-ink); background: var(--signal); padding: 4px 8px; border-radius: 4px; justify-self: start; }
+.card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.test-cards summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+.test-cards ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 4px; font-size: 13px; }
