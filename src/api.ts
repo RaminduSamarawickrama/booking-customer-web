@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createAuthClient, type Session } from "@booking/shared/auth";
+import { createBookingApi } from "@booking/shared/booking";
 import { resolveApiConfig, type KeyValueStore } from "@booking/shared/runtime-config";
 import { env } from "./env";
 
@@ -30,3 +31,5 @@ export function useSession(): Session | null {
   useEffect(() => auth.subscribe(setSession), []);
   return session;
 }
+
+export const bookingApi = createBookingApi(auth);
